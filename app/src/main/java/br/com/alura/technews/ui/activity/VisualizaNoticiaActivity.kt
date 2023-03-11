@@ -17,6 +17,8 @@ import br.com.alura.technews.ui.viewmodel.VisualizaNoticiaViewModel
 import br.com.alura.technews.ui.viewmodel.factory.VisualizaNoticiaViewModelFactory
 import kotlinx.android.synthetic.main.activity_visualiza_noticia.*
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 private const val NOTICIA_NAO_ENCONTRADA = "Notícia não encontrada"
 private const val TITULO_APPBAR = "Notícia"
@@ -29,11 +31,7 @@ class VisualizaNoticiaActivity : AppCompatActivity() {
         intent.getLongExtra(NOTICIA_ID_CHAVE, 0)
     }
 
-    private val viewModel by lazy {
-        val repository = NoticiaRepository(database.noticiaDAO)
-        val factory = VisualizaNoticiaViewModelFactory(noticiaId, repository)
-        ViewModelProviders.of(this, factory).get(VisualizaNoticiaViewModel::class.java)
-    }
+    private val viewModel by viewModel<VisualizaNoticiaViewModel>{parametersOf(noticiaId)}
 
     private lateinit var noticia: Noticia
 
