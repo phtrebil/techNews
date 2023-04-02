@@ -25,36 +25,3 @@ private const val NOTICIA_NAO_ENCONTRADA = "Notícia não encontrada"
 private const val TITULO_APPBAR = "Notícia"
 private const val MENSAGEM_FALHA_REMOCAO = "Não foi possível remover notícia"
 
-class VisualizaNoticiaActivity : AppCompatActivity() {
-
-    private val noticiaId: Long by lazy {
-        intent.getLongExtra(NOTICIA_ID_CHAVE, 0)
-    }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_visualiza_noticia)
-        title = TITULO_APPBAR
-
-
-    }
-
-    override fun onAttachFragment(fragment: Fragment?) {
-        super.onAttachFragment(fragment)
-        if (fragment is VisualizaNoticiaFragment) {
-            fragment.quandoFinalizaTela = { finish() }
-            fragment.quandoSelecionaMenuEdicao = { abreFormularioEdicao() }
-        }
-
-
-    }
-
-    private fun abreFormularioEdicao() {
-        val intent = Intent(this, FormularioNoticiaActivity::class.java)
-        intent.putExtra(NOTICIA_ID_CHAVE, noticiaId)
-        startActivity(intent)
-    }
-
-}
-
